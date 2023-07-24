@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 HashMap<String, String> headers = new HashMap<>();
                 // on below line passing headers.
                 // Make sure to add your authorization.
-                String auth = "e55599e533384bc6a6f8ea20655a6c2b:ab6505ac91f34a098287d9b4c6aa5baa";
+                String auth = "add your authorization (original format)";
                 String auth_base64 = Base64.getEncoder().encodeToString(auth.getBytes(StandardCharsets.UTF_8));
                 headers.put("Authorization", auth_base64);
                 headers.put("Content-Type", "application/x-www-form-urlencoded");
