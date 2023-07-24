@@ -25,9 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -123,10 +121,8 @@ public class MainActivity extends AppCompatActivity {
                 HashMap<String, String> headers = new HashMap<>();
                 // on below line passing headers.
                 // Make sure to add your authorization.
-                String auth = "add your authorization (original format)";
-                String auth_base64 = Base64.getEncoder().encodeToString(auth.getBytes(StandardCharsets.UTF_8));
-                headers.put("Authorization", auth_base64);
-                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                headers.put("Authorization", "Basic ZjBlMDViYjZiZmUzNDNhYzkyMTEwZDA3OWRhYWY0Yjk6YjE5ZDU3Yzc4ODc5NDgxZGIyNjY5OTUxMGIzZDE0NWI=");
+                headers.put("Content-Type", "application/json");
                 return headers;
             }
         };
@@ -144,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         AlbumRVAdapter albumRVAdapter = new AlbumRVAdapter(albumRVModalArrayList, this);
         albumsRV.setAdapter(albumRVAdapter);
         // on below line creating a variable for url
-        String url = "https://api.spotify.com/v1/albums?ids=2oZSF17FtHQ9sYBscQXoBe%2C0z7bJ6UpjUw8U4TATtc5Ku%2C36UJ90D0e295TvlU109Xvy%2C3uuu6u13U0KeVQsZ3CZKK4%2C45ZIondgVoMB84MQQaUo9T%2C15CyNDuGY5fsG0Hn9rjnpG%2C1HeX4SmCFW4EPHQDvHgrVS%2C6mCDTT1XGTf48p6FkK9qFL";
+        String url = "https://api.spotify.com/v1/albums?ids=07w0rG5TETcyihsEIZR3qG%2C5iVEe1GHMtvUHwwqArThFa%2C3lS1y25WAhcqJDATJK70Mq";
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         // on below line making json object request to parse json data.
         JsonObjectRequest albumObjReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -203,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
         AlbumRVAdapter albumRVAdapter = new AlbumRVAdapter(albumRVModalArrayList, this);
         albumsRV.setAdapter(albumRVAdapter);
         // on below line creating a variable for url
-        String url = "https://api.spotify.com/v1/albums?ids=0sjyZypccO1vyihqaAkdt3%2C17vZRWjKOX7TmMktjQL2Qx%2C7lF34sP6HtRAL7VEMvYHff%2C2zXKlf81VmDHIMtQe3oD0r%2C7Gws1vUsWltRs58x8QuYVQ%2C7uftfPn8f7lwtRLUrEVRYM%2C7kSY0fqrPep5vcwOb1juye";
+        String url = "https://api.spotify.com/v1/albums?ids=3jXbdginoAtjcBqT7GcYRd%2C1uD1kdwTWH1DZQZqGKz6rY";
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         // on below line making json object request to parse json data.
         JsonObjectRequest albumObjReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -262,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
         AlbumRVAdapter albumRVAdapter = new AlbumRVAdapter(albumRVModalArrayList, this);
         albumsRV.setAdapter(albumRVAdapter);
         // on below line creating a variable for url
-        String url = "https://api.spotify.com/v1/albums?ids=1P4eCx5b11Tfmi4s1GmWmQ%2C2SsEtiB6yJYn8hRRAmtVda%2C7hhxms8KCwlQCWffIJpN9b%2C3umvKIjsD484pa9pCyPK2x%2C3OHC6XD29wXWADtAOP2geV%2C3RZxrS2dDZlbsYtMRM89v8%2C24C47633GRlozws7WBth7t";
+        String url = "https://api.spotify.com/v1/albums?ids=5HOHne1wzItQlIYmLXLYfZ%2C3AafSrFIbJPH6BJHiJm1Cd%2C7hhxms8KCwlQCWffIJpN9b%2C3umvKIjsD484pa9pCyPK2x%2C3OHC6XD29wXWADtAOP2geV%2C3RZxrS2dDZlbsYtMRM89v8%2C24C47633GRlozws7WBth7t";
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         // on below line making json object request to parse json data.
         JsonObjectRequest albumObjReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
