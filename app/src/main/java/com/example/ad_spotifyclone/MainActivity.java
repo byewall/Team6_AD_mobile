@@ -1,15 +1,23 @@
 package com.example.ad_spotifyclone;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -31,6 +39,9 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +52,37 @@ public class MainActivity extends AppCompatActivity {
         initializePopularAlbumsRV();
         initializeTrendingAlbumsRV();
         initializeSearchView();
+
+        ImageButton recordBtn = findViewById(R.id.idRecording);
+        recordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.RECORD_AUDIO)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // permission is not granted
+                    ActivityCompat.requestPermissions(MainActivity.this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+                } else {
+                    // permission has already been granted
+                    startRecordActivity();
+                }
+            }
+        });
+    }
+
+    private void startRecordActivity() {
+        Intent intent = new Intent(MainActivity.this, RecordActivity.class);
+        startActivity(intent);
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startRecordActivity();
+            } else {
+                Toast.makeText(this, "Recording audio permission not granted", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     // below method is use to initialize search view.
@@ -121,8 +163,8 @@ public class MainActivity extends AppCompatActivity {
                 HashMap<String, String> headers = new HashMap<>();
                 // on below line passing headers.
                 // Make sure to add your authorization.
-                headers.put("Authorization", "Basic ZjBlMDViYjZiZmUzNDNhYzkyMTEwZDA3OWRhYWY0Yjk6YjE5ZDU3Yzc4ODc5NDgxZGIyNjY5OTUxMGIzZDE0NWI=");
-                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "Basic ZjBlMDViYjZiZmUzNDNhYzkyMTEwZDA3OWRhYWY0Yjk6OWJmYTM2NjQwNTBmNDhlYTk2ZGE2YzA4MzcwNGU2ZDQ=");
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
                 return headers;
             }
         };
