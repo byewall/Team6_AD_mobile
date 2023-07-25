@@ -1,16 +1,23 @@
 package com.example.ad_spotifyclone;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -32,6 +39,9 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +52,37 @@ public class MainActivity extends AppCompatActivity {
         initializePopularAlbumsRV();
         initializeTrendingAlbumsRV();
         initializeSearchView();
+
+        ImageButton recordBtn = findViewById(R.id.idRecording);
+        recordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.RECORD_AUDIO)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // permission is not granted
+                    ActivityCompat.requestPermissions(MainActivity.this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+                } else {
+                    // permission has already been granted
+                    startRecordActivity();
+                }
+            }
+        });
+    }
+
+    private void startRecordActivity() {
+        Intent intent = new Intent(MainActivity.this, RecordActivity.class);
+        startActivity(intent);
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startRecordActivity();
+            } else {
+                Toast.makeText(this, "Recording audio permission not granted", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     // below method is use to initialize search view.
@@ -77,12 +118,6 @@ public class MainActivity extends AppCompatActivity {
         // on below line getting token from shared prefs.
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         return sh.getString("token", "Not Found");
-    }
-    private String getUserSpecificData() {
-        // Fetch user-specific data from the server or local storage.
-        // For example, if you need to fetch the user's ID to construct the URL:
-        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        return sh.getString("userId", ""); // Return the user ID from SharedPreferences.
     }
 
     @Override
@@ -125,14 +160,11 @@ public class MainActivity extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                // on below line passing headers.
                 HashMap<String, String> headers = new HashMap<>();
-                String authString = "edd544d18c2044c5a53faaedc9ffea15:c7656a18575840e9a91cb4246ec4a904";
-                String base64Auth = Base64.encodeToString(authString.getBytes(), Base64.NO_WRAP);
-                String authHeaderValue = "Basic " + base64Auth;
-                headers.put("Authorization", authHeaderValue);
+                // on below line passing headers.
+                // Make sure to add your authorization.
+                headers.put("Authorization", "Basic ZjBlMDViYjZiZmUzNDNhYzkyMTEwZDA3OWRhYWY0Yjk6OWJmYTM2NjQwNTBmNDhlYTk2ZGE2YzA4MzcwNGU2ZDQ=");
                 headers.put("Content-Type", "application/x-www-form-urlencoded");
-                //headers.put("Content-Type", "application/json");
                 return headers;
             }
         };
@@ -149,18 +181,11 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<AlbumRVModal> albumRVModalArrayList = new ArrayList<>();
         AlbumRVAdapter albumRVAdapter = new AlbumRVAdapter(albumRVModalArrayList, this);
         albumsRV.setAdapter(albumRVAdapter);
-//        // on below line creating a variable for url
-//        String url = "https://api.spotify.com/v1/albums?ids=07w0rG5TETcyihsEIZR3qG%2C5iVEe1GHMtvUHwwqArThFa%2C3lS1y25WAhcqJDATJK70Mq";
-//        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-        String userAccessToken = getToken(); // Get the user access token from SharedPreferences.
-        String userId = getUserSpecificData(); // Fetch any other user-specific data if required.
-
-        // Example dynamic URL construction using user-specific data.
-        String dynamicUrl = "https://api.example.com/v1/data?userId=" + userId;
-
+        // on below line creating a variable for url
+        String url = "https://api.spotify.com/v1/albums?ids=07w0rG5TETcyihsEIZR3qG%2C5iVEe1GHMtvUHwwqArThFa%2C3lS1y25WAhcqJDATJK70Mq";
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         // on below line making json object request to parse json data.
-        JsonObjectRequest albumObjReq = new JsonObjectRequest(Request.Method.GET, dynamicUrl, null, new Response.Listener<JSONObject>()  {
+        JsonObjectRequest albumObjReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -196,9 +221,9 @@ public class MainActivity extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                // Pass the user access token in the Authorization header.
+                // on below line passing headers.
                 HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization", userAccessToken);
+                headers.put("Authorization", getToken());
                 headers.put("Accept", "application/json");
                 headers.put("Content-Type", "application/json");
                 return headers;

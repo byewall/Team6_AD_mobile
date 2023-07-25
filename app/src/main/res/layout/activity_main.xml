@@ -18,12 +18,26 @@
             android:id="@+id/idTVGreetHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:padding="10dp"
             android:text="Good afternoon"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
+        <!--recording button-->
+        <ImageButton
+            android:id="@+id/idRecording"
+            android:padding="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_recording" />
+
 
         <!-- text view to display search heading-->
         <TextView
