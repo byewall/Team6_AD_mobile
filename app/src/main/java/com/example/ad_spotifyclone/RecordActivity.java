@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class RecordActivity extends AppCompatActivity {
@@ -17,6 +19,10 @@ public class RecordActivity extends AppCompatActivity {
     private Chronometer chronometer;
     private ImageButton stopBtn;
     private boolean isRecording = true;
+
+    private long baseTime;
+
+    private long elapsedTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +31,7 @@ public class RecordActivity extends AppCompatActivity {
         chronometer = findViewById(R.id.chronometer);
         chronometer.start();
 
+        startDuration();
         startRecording();
 
         stopBtn = findViewById(R.id.stopBtn);
@@ -34,12 +41,14 @@ public class RecordActivity extends AppCompatActivity {
                 if (isRecording) {
                     stopRecording();
                     chronometer.stop();
+                    stopDuration();
                     stopBtn.setImageResource(R.drawable.ic_start);
                     isRecording = false;
                 } else {
                     startRecording();
                     chronometer.setBase(SystemClock.elapsedRealtime());
                     chronometer.start();
+                    startDuration();
                     stopBtn.setImageResource(R.drawable.ic_stop);
                     isRecording = true;
                 }
@@ -77,6 +86,26 @@ public class RecordActivity extends AppCompatActivity {
             recorder = null;
         }
         chronometer.stop();
+        stopDuration();
     }
 
+    private void startDuration(){
+        chronometer.getBase();
+    }
+
+    private void stopDuration(){
+        elapsedTime = SystemClock.elapsedRealtime() - baseTime;
+        String duration = String.valueOf(elapsedTime);
+        File cacheDir = getExternalCacheDir();
+        File logFile = new File(cacheDir.getAbsolutePath(), "log.txt");
+        try {
+            FileWriter writer = new FileWriter(logFile, true);
+            writer.write(baseTime + "\n");
+            writer.write(elapsedTime + "\n");
+            writer.write(duration + "\n");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
