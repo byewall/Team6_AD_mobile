@@ -30,14 +30,14 @@ public class HomeActivity extends AppCompatActivity {
         buttonModel1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logInteraction("Selected Model 1");
+                logInteraction("Model 1");
             }
         });
 
         buttonModel2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logInteraction("Selected Model 2");
+                logInteraction("Model 2");
             }
         });
 

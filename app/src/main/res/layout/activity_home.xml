@@ -47,7 +47,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextTaskNumber"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"
         android:text="Select Model 1"/>
 
     <Button
@@ -55,15 +56,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btnModel1"
-        android:layout_marginTop="16dp"
+        android:layout_margin="20dp"
         android:text="Select Model 2"/>
 
     <Button
         android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
+        android:layout_width="174dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/btnModel2"
-        android:layout_marginTop="16dp"
-        android:text="Submit Log File"/>
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="370dp"
+        android:layout_marginBottom="12dp"
+        android:text="Submit Log File" />
 
 </RelativeLayout>
