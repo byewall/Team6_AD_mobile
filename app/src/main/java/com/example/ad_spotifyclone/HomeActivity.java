@@ -52,6 +52,8 @@ public class HomeActivity extends AppCompatActivity {
     private void logInteraction(String action) {
         String userId = editTextUserId.getText().toString();
         String taskNumber = editTextTaskNumber.getText().toString();
+
+        //edit later with start and stop time also
         String logMessage = "User ID: " + userId + ", Task Number: " + taskNumber + ", Action: " + action;
 
         //Using Logcat for logging.
