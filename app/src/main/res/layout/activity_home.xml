@@ -1,0 +1,45 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/editTextUserId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="User ID"
+        android:layout_margin="16dp"/>
+
+    <EditText
+        android:id="@+id/editTextTaskNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextUserId"
+        android:hint="Task Number"
+        android:layout_margin="16dp"/>
+
+    <Button
+        android:id="@+id/btnModel1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextTaskNumber"
+        android:text="Select Model 1"
+        android:layout_margin="16dp"/>
+
+    <Button
+        android:id="@+id/btnModel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnModel1"
+        android:text="Select Model 2"
+        android:layout_margin="16dp"/>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnModel2"
+        android:text="Submit Log File"
+        android:layout_margin="16dp"/>
+
+</RelativeLayout>

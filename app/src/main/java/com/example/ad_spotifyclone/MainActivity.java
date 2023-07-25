@@ -3,6 +3,7 @@ package com.example.ad_spotifyclone;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -77,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         return sh.getString("token", "Not Found");
     }
+    private String getUserSpecificData() {
+        // Fetch user-specific data from the server or local storage.
+        // For example, if you need to fetch the user's ID to construct the URL:
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        return sh.getString("userId", ""); // Return the user ID from SharedPreferences.
+    }
 
     @Override
     protected void onStart() {
@@ -118,11 +125,14 @@ public class MainActivity extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<>();
                 // on below line passing headers.
-                // Make sure to add your authorization.
-                headers.put("Authorization", "Basic ZjBlMDViYjZiZmUzNDNhYzkyMTEwZDA3OWRhYWY0Yjk6YjE5ZDU3Yzc4ODc5NDgxZGIyNjY5OTUxMGIzZDE0NWI=");
-                headers.put("Content-Type", "application/json");
+                HashMap<String, String> headers = new HashMap<>();
+                String authString = "edd544d18c2044c5a53faaedc9ffea15:c7656a18575840e9a91cb4246ec4a904";
+                String base64Auth = Base64.encodeToString(authString.getBytes(), Base64.NO_WRAP);
+                String authHeaderValue = "Basic " + base64Auth;
+                headers.put("Authorization", authHeaderValue);
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                //headers.put("Content-Type", "application/json");
                 return headers;
             }
         };
@@ -139,11 +149,18 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<AlbumRVModal> albumRVModalArrayList = new ArrayList<>();
         AlbumRVAdapter albumRVAdapter = new AlbumRVAdapter(albumRVModalArrayList, this);
         albumsRV.setAdapter(albumRVAdapter);
-        // on below line creating a variable for url
-        String url = "https://api.spotify.com/v1/albums?ids=07w0rG5TETcyihsEIZR3qG%2C5iVEe1GHMtvUHwwqArThFa%2C3lS1y25WAhcqJDATJK70Mq";
+//        // on below line creating a variable for url
+//        String url = "https://api.spotify.com/v1/albums?ids=07w0rG5TETcyihsEIZR3qG%2C5iVEe1GHMtvUHwwqArThFa%2C3lS1y25WAhcqJDATJK70Mq";
+//        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+        String userAccessToken = getToken(); // Get the user access token from SharedPreferences.
+        String userId = getUserSpecificData(); // Fetch any other user-specific data if required.
+
+        // Example dynamic URL construction using user-specific data.
+        String dynamicUrl = "https://api.example.com/v1/data?userId=" + userId;
+
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         // on below line making json object request to parse json data.
-        JsonObjectRequest albumObjReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest albumObjReq = new JsonObjectRequest(Request.Method.GET, dynamicUrl, null, new Response.Listener<JSONObject>()  {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -179,9 +196,9 @@ public class MainActivity extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                // on below line passing headers.
+                // Pass the user access token in the Authorization header.
                 HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization", getToken());
+                headers.put("Authorization", userAccessToken);
                 headers.put("Accept", "application/json");
                 headers.put("Content-Type", "application/json");
                 return headers;
