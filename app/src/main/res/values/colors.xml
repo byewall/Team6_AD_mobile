@@ -9,4 +9,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="back_color">#141414</color>
     <color name="fab_color">#20D761</color>
+    <color name="colorPrimary">@color/black</color>
+    <color name="colorPrimaryDark">@color/black</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="green">#1DB954</color>
+    <color name="gray">#ACADA8</color>
+    <color name="gray_strong">#2c2c2c</color>
 </resources>

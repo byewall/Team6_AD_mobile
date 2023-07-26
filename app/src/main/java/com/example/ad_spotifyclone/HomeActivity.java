@@ -1,10 +1,12 @@
 package com.example.ad_spotifyclone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,21 +32,29 @@ public class HomeActivity extends AppCompatActivity {
         buttonModel1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logInteraction("Model 1");
+                if (validateInputs()) {
+                    logInteraction("Model 1");
+                    Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
         buttonModel2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logInteraction("Model 2");
+                if (validateInputs()) {
+                    logInteraction("Model 2");
+                }
             }
         });
 
         buttonSubmitLogFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitLogFile();
+                if (validateInputs()) {
+                    submitLogFile();
+                }
             }
         });
     }
@@ -58,6 +68,17 @@ public class HomeActivity extends AppCompatActivity {
 
         //Using Logcat for logging.
         Log.d("AppLog", logMessage);
+    }
+
+    private boolean validateInputs() {
+        String userId = editTextUserId.getText().toString();
+        String taskNumber = editTextTaskNumber.getText().toString();
+
+        if (userId.isEmpty() || taskNumber.isEmpty()) {
+            Toast.makeText(this, "User ID and Task ID cannot be empty.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     private void submitLogFile() {
