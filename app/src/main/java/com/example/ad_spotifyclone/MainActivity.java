@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -38,9 +40,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
-    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
+    private Chronometer chronometer;
+    private ImageButton startBtn;
+    private boolean isFinding = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,37 +55,26 @@ public class MainActivity extends AppCompatActivity {
         initializeTrendingAlbumsRV();
         initializeSearchView();
 
-        ImageButton recordBtn = findViewById(R.id.idRecording);
-        recordBtn.setOnClickListener(new View.OnClickListener() {
+        // start finding button
+        ImageButton startBtn = findViewById(R.id.startBtn);
+        chronometer = findViewById(R.id.chronometer);
+        startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.RECORD_AUDIO)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    // permission is not granted
-                    ActivityCompat.requestPermissions(MainActivity.this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+                if (isFinding) {
+                    chronometer.stop();
+                    startBtn.setImageResource(R.drawable.ic_start);
+                    isFinding = false;
                 } else {
-                    // permission has already been granted
-                    startRecordActivity();
+                    chronometer.setBase(SystemClock.elapsedRealtime());
+                    chronometer.start();
+                    startBtn.setImageResource(R.drawable.ic_stop);
+                    isFinding = true;
                 }
             }
         });
     }
 
-    private void startRecordActivity() {
-        Intent intent = new Intent(MainActivity.this, RecordActivity.class);
-        startActivity(intent);
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startRecordActivity();
-            } else {
-                Toast.makeText(this, "Recording audio permission not granted", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
     // below method is use to initialize search view.
     private void initializeSearchView() {
@@ -163,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 HashMap<String, String> headers = new HashMap<>();
                 // on below line passing headers.
                 // Make sure to add your authorization.
-                headers.put("Authorization", "Basic ZjBlMDViYjZiZmUzNDNhYzkyMTEwZDA3OWRhYWY0Yjk6OWJmYTM2NjQwNTBmNDhlYTk2ZGE2YzA4MzcwNGU2ZDQ=");
+                headers.put("Authorization", "Basic ZjBlMDViYjZiZmUzNDNhYzkyMTEwZDA3OWRhYWY0Yjk6OWI4N2FkYjU2OWVmNGM5ZTkzZGY2YzQxZmM1OWQzY2I=");
                 headers.put("Content-Type", "application/x-www-form-urlencoded");
                 return headers;
             }
@@ -350,5 +341,12 @@ public class MainActivity extends AppCompatActivity {
         // on below line adding request to queue.
         queue.add(albumObjReq);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        chronometer.stop();
+    }
+
 
 }
