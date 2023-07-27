@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 // on below line passing headers.
                 HashMap<String, String> headers = new HashMap<>();
-                String authString = "edd544d18c2044c5a53faaedc9ffea15:c7656a18575840e9a91cb4246ec4a904";
+                String authString = "2c830d8c75b8488295825cfd8a6df5f8:ec29ff786a934acda8cdd83974ed00eb";
                 String base64Auth = Base64.encodeToString(authString.getBytes(), Base64.NO_WRAP);
                 String authHeaderValue = "Basic " + base64Auth;
                 headers.put("Authorization", authHeaderValue);

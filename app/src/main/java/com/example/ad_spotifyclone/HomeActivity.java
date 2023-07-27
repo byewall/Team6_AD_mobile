@@ -10,6 +10,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class HomeActivity extends AppCompatActivity {
 
     private EditText editTextUserId;
@@ -85,5 +91,35 @@ public class HomeActivity extends AppCompatActivity {
         // Code to submit the log file goes here.
         // This function will be called when the "Submit Log File" button is clicked.
         // Implement the logic to send the log file to your desired server or save it for later analysis.
+        saveLogFile();
+    }
+
+    private void saveLogFile(){
+        // save the log file to the app storage as a txt file first
+        // then later submit the log file to the server
+        String userId = editTextUserId.getText().toString();
+        String taskNumber = editTextTaskNumber.getText().toString();
+        String logFileName = "logUser" + userId + "Task" + taskNumber + ".txt";
+
+        File cacheDir = getExternalCacheDir();
+        File logFile = new File(cacheDir.getAbsolutePath(), logFileName);
+        try {
+            // Runtime.getRuntime().exec("logcat -f " + logFile.getAbsolutePath());
+            Process process = Runtime.getRuntime().exec("logcat -d");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            StringBuilder log = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.contains("AppLog") && line.contains(userId) && line.contains(taskNumber)) {
+                    log.append(line);
+                    log.append("\n");
+                }
+            }
+            FileWriter writer = new FileWriter(logFile);
+            writer.write(log.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
