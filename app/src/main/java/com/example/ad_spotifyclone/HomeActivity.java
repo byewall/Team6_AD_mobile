@@ -1,29 +1,29 @@
 package com.example.ad_spotifyclone;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private EditText editTextUserId;
-    private EditText editTextTaskNumber;
-    private Button buttonModel1;
-    private Button buttonModel2;
-    private Button buttonSubmitLogFile;
+    private EditText editTextUserId, editTextTaskNumber;
+    private Button buttonModel1, buttonModel2, buttonSubmitLogFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        editTextUserId = findViewById(R.id.editTextUserId);
+        editTextUserId = findViewById(R.id.editTextUserId );
         editTextTaskNumber = findViewById(R.id.editTextTaskNumber);
         buttonModel1 = findViewById(R.id.btnModel1);
         buttonModel2 = findViewById(R.id.btnModel2);

@@ -53,37 +53,9 @@ public class MainActivity extends AppCompatActivity {
         initializeTrendingAlbumsRV();
         initializeSearchView();
 
-        ImageButton recordBtn = findViewById(R.id.idRecording);
-        recordBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.RECORD_AUDIO)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    // permission is not granted
-                    ActivityCompat.requestPermissions(MainActivity.this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
-                } else {
-                    // permission has already been granted
-                    startRecordActivity();
-                }
-            }
-        });
     }
 
-    private void startRecordActivity() {
-        Intent intent = new Intent(MainActivity.this, RecordActivity.class);
-        startActivity(intent);
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startRecordActivity();
-            } else {
-                Toast.makeText(this, "Recording audio permission not granted", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+
 
     // below method is use to initialize search view.
     private void initializeSearchView() {
