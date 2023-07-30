@@ -32,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
         buttonModel1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("ButtonLog", "Select Model 1 button clicked");
                 if (validateInputs()) {
                     logInteraction("Model 1");
                     Intent intent = new Intent(HomeActivity.this, SearchActivity.class);

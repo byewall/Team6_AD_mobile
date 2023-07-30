@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
     private void searchTracks(String searchQuery) {
         // on below line opening search activity to
         // display search results in search activity.
-        Intent i = new Intent(MainActivity.this, SearchActivity.class);
-        i.putExtra("searchQuery", searchQuery);
-        startActivity(i);
+//        Intent i = new Intent(MainActivity.this, SearchActivity.class);
+//        i.putExtra("searchQuery", searchQuery);
+//        startActivity(i);
     }
 
     // below method is use to get token.
