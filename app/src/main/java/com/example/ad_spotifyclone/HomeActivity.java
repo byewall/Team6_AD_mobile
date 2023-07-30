@@ -41,6 +41,8 @@ public class HomeActivity extends AppCompatActivity {
                 if (validateInputs()) {
                     logInteraction("Model 1");
                     Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+                    intent.putExtra("userId", editTextUserId.getText().toString());
+                    intent.putExtra("taskNumber", editTextTaskNumber.getText().toString());
                     startActivity(intent);
                 }
             }

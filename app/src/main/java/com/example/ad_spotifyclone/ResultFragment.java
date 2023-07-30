@@ -9,10 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-public class SearchFragment extends Fragment {
+public class ResultFragment extends Fragment {
 
     View view;
 
@@ -20,11 +19,11 @@ public class SearchFragment extends Fragment {
 
     String taskNumber;
 
-    private Button popButton;
+    private Button popHitsButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_search,container,false);
+        view = inflater.inflate(R.layout.fragment_result,container,false);
 
         // Get the arguments from the Bundle
         Bundle bundle = getArguments();
@@ -33,12 +32,12 @@ public class SearchFragment extends Fragment {
             taskNumber = bundle.getString("taskNumber");
         }
 
-        popButton = view.findViewById(R.id.popBtn);
-        popButton.setOnClickListener(new View.OnClickListener() {
+        popHitsButton = view.findViewById(R.id.popHitsBtn);
+        popHitsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                logInteraction("Pop");
-                Intent intent = new Intent(getActivity(),ResultActivity.class);
+                logInteraction("Pop Hits");
+                Intent intent = new Intent(getActivity(),PlaylistActivity.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("taskNumber", taskNumber);
                 startActivity(intent);
@@ -48,6 +47,7 @@ public class SearchFragment extends Fragment {
         return view;
 
     }
+
     private void logInteraction(String action) {
 
         //edit later with start and stop time also

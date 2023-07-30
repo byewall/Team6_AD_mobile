@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/result_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:layout_marginBottom="57dp"
+    android:fitsSystemWindows="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/playlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="230dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/popHitsBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:text="Pop Hits"
+                    android:gravity="left|top"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:backgroundTint="@color/green"
+                    android:text="Classic Pop"
+                    android:gravity="left|top"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:layout_marginLeft="15dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:backgroundTint="@color/purple_200"
+                    android:text="Tick-Tock Pop"
+                    android:gravity="left|top"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginLeft="-315dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:backgroundTint="#2196F3"
+                    android:text="Pop Hits 2000s"
+                    android:gravity="left|top"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginLeft="15dp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

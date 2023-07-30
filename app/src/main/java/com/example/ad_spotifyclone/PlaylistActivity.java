@@ -1,15 +1,16 @@
 package com.example.ad_spotifyclone;
 
-import android.content.Intent;
-import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SearchActivity extends AppCompatActivity {
+import android.content.Intent;
+import android.os.Bundle;
+
+public class PlaylistActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_playlist);
 
         Intent intent = getIntent();
         String userId = intent.getStringExtra("userId");
@@ -19,13 +20,12 @@ public class SearchActivity extends AppCompatActivity {
         bundle.putString("userId", userId);
         bundle.putString("taskNumber", taskNumber);
 
-        // Load the SearchFragment
+        // Load the PlayListFragment
         if (savedInstanceState == null) {
-            // Load the SearchFragment and set the arguments
-            SearchFragment searchFragment = new SearchFragment();
-            searchFragment.setArguments(bundle);
+            PlaylistFragment playlistFragment = new PlaylistFragment();
+            playlistFragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, searchFragment)
+                    .replace(R.id.playlistContainer, playlistFragment)
                     .commit();
         }
     }
