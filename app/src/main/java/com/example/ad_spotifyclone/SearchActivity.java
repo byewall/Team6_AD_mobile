@@ -114,17 +114,17 @@ public class SearchActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String accessToken = jsonObject.getString("access_token");
-                    String refreshToken = jsonObject.getString("refresh_token"); // Get the refresh token from the response
                     saveAccessToken(accessToken);
-                    saveRefreshToken(refreshToken); // Save the refresh token for future use
                     fetchCategories();
                 } catch (JSONException e) {
+                    Log.e("generateToken", "JSON parsing error", e);
                     e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("generateToken", "Volley error", error);
                 Toast.makeText(SearchActivity.this, "Failed to get response = " + error, Toast.LENGTH_SHORT).show();
             }
         }) {
@@ -152,7 +152,7 @@ public class SearchActivity extends AppCompatActivity {
     private void fetchCategories() {
         String token = getAccessToken();
         if (token == null) {
-            Log.d("tokenLog", "No token");
+            Log.d("getAccessToken", "Access token is null");
             return;
         }
 
@@ -164,7 +164,9 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray itemsArray = response.getJSONArray("items");
+                            Log.d("fetchCategories", "Response: " + response);
+                            JSONObject categoriesObject = response.getJSONObject("categories");
+                            JSONArray itemsArray = categoriesObject.getJSONArray("items");
                             categoryItems.clear();
 
                             for (int i = 0; i < itemsArray.length(); i++) {
@@ -182,6 +184,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // method to handle errors.
+                Log.e("fetchCategories", "Volley error", error);
                 Toast.makeText(SearchActivity.this, "Failed to fetch categories: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
