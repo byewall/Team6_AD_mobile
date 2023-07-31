@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     private void searchTracks(String searchQuery) {
         // on below line opening search activity to
         // display search results in search activity.
-        Intent i = new Intent(MainActivity.this, SearchActivity.class);
+        Intent i = new Intent(MainActivity.this, SearchFragment.class);
         i.putExtra("searchQuery", searchQuery);
         startActivity(i);
     }

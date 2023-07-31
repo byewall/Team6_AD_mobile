@@ -3,7 +3,9 @@ package com.example.ad_spotifyclone;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -11,79 +13,90 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class HomeActivity extends AppCompatActivity {
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
-    private EditText editTextUserId, editTextTaskNumber;
-    private Button buttonModel1, buttonModel2, buttonSubmitLogFile;
+public class HomeActivity extends AppCompatActivity {
+    private Chronometer chronometer;
+    private ImageButton startBtn, backBtn;
+    private boolean isChronometerRunning = false;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        editTextUserId = findViewById(R.id.editTextUserId );
-        editTextTaskNumber = findViewById(R.id.editTextTaskNumber);
-        buttonModel1 = findViewById(R.id.btnModel1);
-        buttonModel2 = findViewById(R.id.btnModel2);
-        buttonSubmitLogFile = findViewById(R.id.btnSubmit);
-
-        buttonModel1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (validateInputs()) {
-                    logInteraction("Model 1");
-                    Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        buttonModel2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (validateInputs()) {
-                    logInteraction("Model 2");
-                }
-            }
-        });
-
-        buttonSubmitLogFile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (validateInputs()) {
-                    submitLogFile();
-                }
-            }
-        });
-    }
-
-    private void logInteraction(String action) {
-        String userId = editTextUserId.getText().toString();
-        String taskNumber = editTextTaskNumber.getText().toString();
-
-        //edit later with start and stop time also
-        String logMessage = "User ID: " + userId + ", Task Number: " + taskNumber + ", Action: " + action;
-
-        //Using Logcat for logging.
-        Log.d("AppLog", logMessage);
-    }
-
-    private boolean validateInputs() {
-        String userId = editTextUserId.getText().toString();
-        String taskNumber = editTextTaskNumber.getText().toString();
-
-        if (userId.isEmpty() || taskNumber.isEmpty()) {
-            Toast.makeText(this, "User ID and Task ID cannot be empty.", Toast.LENGTH_LONG).show();
-            return false;
+        // Load the SearchFragment
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new HomeFragment())
+                    .commit();
         }
-        return true;
+        startBtn = findViewById(R.id.startBtn);
+        backBtn = findViewById(R.id.backBtn);
+        chronometer = findViewById(R.id.chronometer);
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chronometer.stop();
+                startBtn.setImageResource(R.drawable.ic_start);
+                isChronometerRunning = false;
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener(){
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.homeBtn){
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, new HomeFragment())
+                            .commit();
+                    return true;
+                }
+                if (item.getItemId() == R.id.searchBtn){
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, new SearchFragment())
+                            .commit();
+                    return true;
+                }
+                if (item.getItemId() == R.id.historyBtn) {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, new HistoryFragment())
+                            .commit();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+    public void startChronometer() {
+        if (!isChronometerRunning) {
+            chronometer.setBase(SystemClock.elapsedRealtime());
+            chronometer.start();
+            startBtn.setImageResource(R.drawable.ic_stop);
+            isChronometerRunning = true;
+        }
     }
 
-    private void submitLogFile() {
-        // Code to submit the log file goes here.
-        // This function will be called when the "Submit Log File" button is clicked.
-        // Implement the logic to send the log file to your desired server or save it for later analysis.
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        chronometer.stop();
     }
+
 }

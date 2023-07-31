@@ -1,0 +1,100 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/home_background">
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:src="@drawable/spotify_logo_30"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+    <TextView
+        android:id="@+id/textViewUserId"
+        android:layout_below="@id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User ID :"
+        android:textColor="@color/white"
+        android:textSize="50px"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="46dp"/>
+
+    <EditText
+        android:id="@+id/editTextUserId"
+        android:layout_below="@id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_toEndOf="@id/textViewUserId"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="32dp"
+        android:hint="1 to 100"
+        android:textColorHint="@android:color/darker_gray"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/textViewTaskNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextUserId"
+        android:text="Task ID :"
+        android:textColor="@color/white"
+        android:textSize="50px"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="38dp"/>
+
+    <EditText
+        android:id="@+id/editTextTaskNumber"
+        android:layout_below="@id/editTextUserId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_toEndOf="@id/textViewTaskNumber"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="32dp"
+        android:hint="1 to 20"
+        android:textColorHint="@android:color/darker_gray"
+        android:textColor="@color/white"/>
+
+    <RelativeLayout
+        android:id="@+id/models"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/editTextTaskNumber"
+        android:layout_marginTop="25dp">
+        <Button
+            android:id="@+id/btnModel1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Model 1"
+            android:backgroundTint="@color/gray_strong" />
+        <Button
+            android:id="@+id/btnModel2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/btnModel1"
+            android:layout_marginStart="20dp"
+            android:text="Model 2"
+            android:backgroundTint="@color/gray_strong" />
+    </RelativeLayout>
+
+    <!--not sure if this is still needed-->
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit Log File"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/models"
+        android:layout_marginTop="20dp"
+        android:textSize="12sp"
+        android:backgroundTint="@color/gray_strong"/>
+
+</RelativeLayout>
