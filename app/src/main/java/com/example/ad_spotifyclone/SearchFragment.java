@@ -16,9 +16,13 @@ public class SearchFragment extends Fragment {
 
     View view;
 
-    String userId;
+    private String userId;
 
-    String taskNumber;
+    private String taskNumber;
+
+    private int modelNumber;
+
+    private long startTime;
 
     private Button popButton;
 
@@ -31,6 +35,8 @@ public class SearchFragment extends Fragment {
         if (bundle != null) {
             userId = bundle.getString("userId");
             taskNumber = bundle.getString("taskNumber");
+            modelNumber = bundle.getInt("modelNumber");
+            startTime = bundle.getLong("startTime");
         }
 
         popButton = view.findViewById(R.id.popBtn);
@@ -38,9 +44,13 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 logInteraction("Pop");
+                // long currentTime = System.currentTimeMillis() - startTime;
+                // logInteraction("Current Time: " + currentTime + " seconds");
                 Intent intent = new Intent(getActivity(),ResultActivity.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("taskNumber", taskNumber);
+                intent.putExtra("modelNumber",modelNumber);
+                intent.putExtra("startTime",startTime);
                 startActivity(intent);
             }
         });

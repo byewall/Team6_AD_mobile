@@ -21,9 +21,17 @@ public class PlaylistFragment extends Fragment {
 
     View view;
 
-    String userId;
+    private String userId;
 
-    String taskNumber;
+    private String taskNumber;
+
+    private int modelNumber;
+
+    private long startTime;
+
+    private long duration;
+
+    private int success;
 
     Button foundButton;
 
@@ -36,13 +44,19 @@ public class PlaylistFragment extends Fragment {
         if (bundle != null) {
             userId = bundle.getString("userId");
             taskNumber = bundle.getString("taskNumber");
+            modelNumber = bundle.getInt("modelNumber");
+            startTime = bundle.getLong("startTime");
         }
 
         foundButton = view.findViewById(R.id.foundBtn);
         foundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                success = 1;
                 logInteraction("Song Found");
+                long endTime = System.currentTimeMillis();
+                duration = endTime - startTime;
+                // logInteraction("Time Stopped. Duration: " + endTime);
                 saveLogFile();
                 Intent intent = new Intent(getActivity(), HomeActivity.class);
                 startActivity(intent);
@@ -55,7 +69,7 @@ public class PlaylistFragment extends Fragment {
     private void saveLogFile(){
         // save the log file to the app storage as a txt file first
         // then later submit the log file to the server
-        String logFileName = "log.txt";
+        String logFileName = "user" + userId + ".txt";
         File cacheDir = getContext().getExternalCacheDir();
         File logFile = new File(cacheDir.getAbsolutePath(), logFileName);
         try {
@@ -68,7 +82,7 @@ public class PlaylistFragment extends Fragment {
                 if (line.contains("AppLog") && line.contains(userId) && line.contains(taskNumber)) {
                     String[] parts = line.split("Action: ");
                     log.append(parts[1]);
-                    log.append(" | ");
+                    log.append("|");
                 }
             }
             FileWriter writer;
@@ -77,9 +91,11 @@ public class PlaylistFragment extends Fragment {
                 writer.append("\n");
             } else {
                 writer = new FileWriter(logFile);
+                // writer.write("taskid, model no, duration (milliseconds), success, history");
+                writer.append("\n");
             }
-            writer.write("User ID: " + userId + ", Task Number: " + taskNumber + ", Action: ");
-            writer.append(log.toString().substring(0, log.length() - 3));
+            writer.write(taskNumber + "," + modelNumber + "," + duration + "," + success + ",");
+            writer.append(log.toString().substring(0, log.length() - 1));
             writer.close();
             // Clear the log buffer
             Runtime.getRuntime().exec("logcat -c");

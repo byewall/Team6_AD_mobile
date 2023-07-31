@@ -24,6 +24,8 @@ public class HomeActivity extends AppCompatActivity {
     private Button buttonModel2;
     private Button buttonSubmitLogFile;
 
+    private long startTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +41,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validateInputs()) {
-                    logInteraction("Model 1");
+                    // logInteraction("Model 1");
+                    startTime = System.currentTimeMillis();
+                    // logInteraction("Time Start: 0 seconds");
                     Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
                     intent.putExtra("userId", editTextUserId.getText().toString());
                     intent.putExtra("taskNumber", editTextTaskNumber.getText().toString());
+                    intent.putExtra("modelNumber", 1);
+                    intent.putExtra("startTime", startTime);
                     startActivity(intent);
                 }
             }
@@ -52,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validateInputs()) {
-                    logInteraction("Model 2");
+                    // logInteraction("Model 2");
                 }
             }
         });
@@ -67,16 +73,16 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void logInteraction(String action) {
-        String userId = editTextUserId.getText().toString();
-        String taskNumber = editTextTaskNumber.getText().toString();
-
-        //edit later with start and stop time also
-        String logMessage = "User ID: " + userId + ", Task Number: " + taskNumber + ", Action: " + action;
-
-        //Using Logcat for logging.
-        Log.d("AppLog", logMessage);
-    }
+//    private void logInteraction(String action) {
+//        String userId = editTextUserId.getText().toString();
+//        String taskNumber = editTextTaskNumber.getText().toString();
+//
+//        //edit later with start and stop time also
+//        String logMessage = "User ID: " + userId + ", Task Number: " + taskNumber + ", Action: " + action;
+//
+//        //Using Logcat for logging.
+//        Log.d("AppLog", logMessage);
+//    }
 
     private boolean validateInputs() {
         String userId = editTextUserId.getText().toString();
@@ -93,35 +99,35 @@ public class HomeActivity extends AppCompatActivity {
         // Code to submit the log file goes here.
         // This function will be called when the "Submit Log File" button is clicked.
         // Implement the logic to send the log file to your desired server or save it for later analysis.
-        saveLogFile();
+        // saveLogFile();
     }
 
-    private void saveLogFile(){
-        // save the log file to the app storage as a txt file first
-        // then later submit the log file to the server
-        String userId = editTextUserId.getText().toString();
-        String taskNumber = editTextTaskNumber.getText().toString();
-        String logFileName = "logUser" + userId + "Task" + taskNumber + ".txt";
-
-        File cacheDir = getExternalCacheDir();
-        File logFile = new File(cacheDir.getAbsolutePath(), logFileName);
-        try {
-            // Runtime.getRuntime().exec("logcat -f " + logFile.getAbsolutePath());
-            Process process = Runtime.getRuntime().exec("logcat -d");
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            StringBuilder log = new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                if (line.contains("AppLog") && line.contains(userId) && line.contains(taskNumber)) {
-                    log.append(line);
-                    log.append("\n");
-                }
-            }
-            FileWriter writer = new FileWriter(logFile);
-            writer.write(log.toString());
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void saveLogFile(){
+//        // save the log file to the app storage as a txt file first
+//        // then later submit the log file to the server
+//        String userId = editTextUserId.getText().toString();
+//        String taskNumber = editTextTaskNumber.getText().toString();
+//        String logFileName = "logUser" + userId + "Task" + taskNumber + ".txt";
+//
+//        File cacheDir = getExternalCacheDir();
+//        File logFile = new File(cacheDir.getAbsolutePath(), logFileName);
+//        try {
+//            // Runtime.getRuntime().exec("logcat -f " + logFile.getAbsolutePath());
+//            Process process = Runtime.getRuntime().exec("logcat -d");
+//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//            StringBuilder log = new StringBuilder();
+//            String line;
+//            while ((line = bufferedReader.readLine()) != null) {
+//                if (line.contains("AppLog") && line.contains(userId) && line.contains(taskNumber)) {
+//                    log.append(line);
+//                    log.append("\n");
+//                }
+//            }
+//            FileWriter writer = new FileWriter(logFile);
+//            writer.write(log.toString());
+//            writer.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

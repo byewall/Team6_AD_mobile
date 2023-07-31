@@ -15,9 +15,13 @@ public class ResultFragment extends Fragment {
 
     View view;
 
-    String userId;
+    private String userId;
 
-    String taskNumber;
+    private String taskNumber;
+
+    private int modelNumber;
+
+    private long startTime;
 
     private Button popHitsButton;
 
@@ -30,6 +34,8 @@ public class ResultFragment extends Fragment {
         if (bundle != null) {
             userId = bundle.getString("userId");
             taskNumber = bundle.getString("taskNumber");
+            modelNumber = bundle.getInt("modelNumber");
+            startTime = bundle.getLong("startTime");
         }
 
         popHitsButton = view.findViewById(R.id.popHitsBtn);
@@ -37,9 +43,13 @@ public class ResultFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 logInteraction("Pop Hits");
+                // long currentTime = System.currentTimeMillis() - startTime;
+                // logInteraction("Current Time: " + currentTime + " seconds");
                 Intent intent = new Intent(getActivity(),PlaylistActivity.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("taskNumber", taskNumber);
+                intent.putExtra("modelNumber",modelNumber);
+                intent.putExtra("startTime",startTime);
                 startActivity(intent);
             }
         });
