@@ -39,6 +39,8 @@
             android:src="@drawable/ic_recording" />
 
 
+
+
         <!-- text view to display search heading-->
         <TextView
             android:id="@+id/idTVSearchHeading"
