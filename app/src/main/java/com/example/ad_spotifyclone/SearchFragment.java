@@ -97,10 +97,14 @@ public class SearchFragment extends Fragment {
     }
 
     private void saveAccessToken(String accessToken) {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        SharedPreferences.Editor myEdit = sharedPreferences.edit();
-        myEdit.putString(ACCESS_TOKEN_KEY, accessToken);
-        myEdit.apply();
+        if(getActivity()!=null) {
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE);
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+            myEdit.putString(ACCESS_TOKEN_KEY, accessToken);
+            myEdit.apply();
+        } else {
+            Log.d("TAG","Fragment not attached to an activity");
+        }
     }
 
     private void saveRefreshToken(String refreshToken) {
