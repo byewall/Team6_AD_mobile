@@ -1,125 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/search_layout"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="80dp">
+        android:layout_height="match_parent" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center">
-
-            <LinearLayout
-                android:id="@+id/musiclist"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp">
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="150dp"
-                    android:layout_height="100dp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:gravity="left|top"
-                    android:text="Pop"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="16dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="150dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="15dp"
-                    android:backgroundTint="@color/green"
-                    android:gravity="left|top"
-                    android:text="Podcast"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="16dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="150dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="-315dp"
-                    android:layout_marginTop="100dp"
-                    android:backgroundTint="@color/purple_200"
-                    android:gravity="left|top"
-                    android:text="Rock"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="16dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="150dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="100dp"
-                    android:backgroundTint="#2196F3"
-                    android:gravity="left|top"
-                    android:text="Rap"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="16dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="150dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="-315dp"
-                    android:layout_marginTop="200dp"
-                    android:backgroundTint="#4527A0"
-                    android:gravity="left|top"
-                    android:text="Hip Hop"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="16dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="150dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="200dp"
-                    android:backgroundTint="#FFC107"
-                    android:gravity="left|top"
-                    android:text="İndie"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="16dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="150dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="-315dp"
-                    android:layout_marginTop="300dp"
-                    android:backgroundTint="#FF9E80"
-                    android:gravity="left|top"
-                    android:text="Lists"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="16dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="150dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="300dp"
-                    android:backgroundTint="#B71C1C"
-                    android:gravity="left|top"
-                    android:text="Radio"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="16dp" />
-            </LinearLayout>
-        </RelativeLayout>
-    </ScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
